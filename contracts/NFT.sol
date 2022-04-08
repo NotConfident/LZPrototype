@@ -17,6 +17,7 @@ contract OmniChainNFT is Ownable, ERC721, ILayerZeroReceiver {
         uint256 _tokenId,
         uint256 counter
     );
+
     constructor(
         address _endpoint,
         uint256 startId,
@@ -26,12 +27,14 @@ contract OmniChainNFT is Ownable, ERC721, ILayerZeroReceiver {
         nextId = startId;
         MAX = _max;
     }
+
     function mint() external payable {
         require(nextId + 1 <= MAX, "Exceeds supply");
         nextId += 1;
         _safeMint(msg.sender, nextId);
         counter += 1;
     }
+
     function crossChain(
         uint16 _dstChainId,
         bytes calldata _destination,
@@ -65,6 +68,7 @@ contract OmniChainNFT is Ownable, ERC721, ILayerZeroReceiver {
             adapterParams
         );
     }
+
     function lzReceive(
         uint16 _srcChainId,
         bytes memory _from,
@@ -85,6 +89,7 @@ contract OmniChainNFT is Ownable, ERC721, ILayerZeroReceiver {
         counter += 1;
         emit ReceiveNFT(_srcChainId, toAddress, tokenId, counter);
     }
+
     // Endpoint.sol estimateFees() returns the fees for the message
     function estimateFees(
         uint16 _dstChainId,

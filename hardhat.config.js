@@ -22,12 +22,32 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
  * @type import('hardhat/config').HardhatUserConfig
  */
 module.exports = {
-  solidity: "0.8.4",
+  solidity: "0.8.9",
   networks: {
+    hardhat: {},
     ropsten: {
       url: process.env.ROPSTEN_URL || "",
       accounts:
-        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+        process.env.HOT_WALLET !== undefined ? [process.env.HOT_WALLET] : [],
+    },
+    mumbai: {
+      url: process.env.MUMBAI_URL || "",
+      gasPrice: 35000000000,
+      saveDeployments: true,
+      accounts:
+        process.env.HOT_WALLET !== undefined ? [process.env.HOT_WALLET] : [],
+    },
+    fuji: {
+      url: process.env.FUJI_URL || "",
+      accounts:
+        process.env.HOT_WALLET !== undefined ? [process.env.HOT_WALLET] : [],
+    },
+    fantomtest: {
+      gasPrice: 350000000000,
+      saveDeployments: true,
+      url: process.env.FANTOM_TESTNET_URL || "",
+      accounts:
+        process.env.HOT_WALLET !== undefined ? [process.env.HOT_WALLET] : [],
     },
   },
   gasReporter: {
